@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Breaking BDE — la liste jaune de l'ESCP." />
+  <title>Breaking BDE — ESCP</title>
+  <style>
+    :root { --yellow:#ffd400; --ink:#111; --paper:#fff9df; --muted:#6f6a58; --line:#ded5a9; }
+    * { box-sizing:border-box; scroll-behavior:smooth; }
+    html { scroll-padding-top:130px; }
+    button,select,textarea { font:inherit; }
+    button { cursor:pointer; }
+    :focus-visible { outline:3px solid #8f5800; outline-offset:5px; }
+    [hidden] { display:none!important; }
+    body { margin:0; color:var(--ink); background:var(--paper); font-family:Arial,Helvetica,sans-serif; }
+    a { color:inherit; text-decoration:none; }
+    .nav { position:sticky; top:0; z-index:10; display:flex; justify-content:space-between; align-items:center; padding:18px 6vw; background:rgba(255,249,223,.94); backdrop-filter:blur(12px); border-bottom:1px solid var(--line); }
+    .brand { font-weight:950; letter-spacing:-.06em; font-size:1.45rem; }
+    .brand span { color:#b28d00; }
+    .nav-links { display:flex; gap:24px; font-size:.82rem; font-weight:800; text-transform:uppercase; }
+    .nav-links a:hover { color:#a47d00; }
+    .hero { min-height:88vh; display:grid; place-items:center; padding:8vw 6vw; background:var(--yellow); overflow:hidden; position:relative; }
+    .hero:after { content:""; position:absolute; width:42vw; height:42vw; right:-12vw; bottom:-18vw; border:2px solid rgba(17,17,17,.2); border-radius:50%; box-shadow:0 0 0 40px rgba(17,17,17,.06),0 0 0 80px rgba(17,17,17,.04); }
+    .hero-inner { width:min(1100px,100%); position:relative; z-index:1; }
+    .kicker { font-weight:900; text-transform:uppercase; letter-spacing:.16em; font-size:.8rem; }
+    h1 { font-size:clamp(4.5rem,15vw,12rem); line-height:.78; letter-spacing:-.1em; margin:28px 0; max-width:900px; }
+    .hero-copy { font-size:clamp(1.1rem,2vw,1.5rem); max-width:560px; line-height:1.35; font-weight:700; }
+    .buttons { display:flex; flex-wrap:wrap; gap:12px; margin-top:30px; }
+    .button { display:inline-block; padding:14px 20px; border:2px solid var(--ink); border-radius:999px; font-weight:900; font-size:.9rem; }
+    .button.dark { background:var(--ink); color:var(--yellow); }
+    .button:hover { transform:translateY(-2px); }
+    section { width:min(1100px,88vw); margin:auto; padding:100px 0; }
+    .section-head { display:flex; justify-content:space-between; gap:30px; align-items:end; margin-bottom:36px; }
+    h2 { margin:0; font-size:clamp(2.5rem,6vw,5rem); letter-spacing:-.08em; line-height:.9; }
+    .lead { max-width:440px; color:var(--muted); line-height:1.6; }
+    .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .card { background:#fffdf4; border:1px solid var(--line); border-radius:18px; padding:25px; min-height:190px; box-shadow:5px 5px 0 #eee3ae; }
+    .card:hover { transform:translate(-2px,-2px); box-shadow:8px 8px 0 var(--yellow); }
+    .tag { display:inline-block; background:var(--yellow); border-radius:999px; padding:6px 10px; font-size:.7rem; font-weight:900; text-transform:uppercase; margin-bottom:28px; }
+    .card h3 { font-size:1.45rem; margin:0 0 12px; }
+    .card p { color:var(--muted); line-height:1.5; margin:0; }
+    .event { background:var(--ink); color:white; border-radius:24px; padding:38px; display:flex; justify-content:space-between; gap:30px; align-items:end; }
+    .event .tag { color:var(--ink); }
+    .event h3 { color:var(--yellow); font-size:clamp(2rem,5vw,4rem); letter-spacing:-.07em; margin:0 0 12px; }
+    .event p { color:#c9c9c9; max-width:550px; line-height:1.55; }
+    .event .button { border-color:var(--yellow); color:var(--yellow); white-space:nowrap; }
+    .contact { background:var(--yellow); width:100%; padding:80px 6vw; }
+    .contact-inner { width:min(1100px,100%); margin:auto; }
+    .contact h2 { max-width:700px; }
+    footer { padding:26px 6vw; display:flex; justify-content:space-between; font-size:.8rem; border-top:1px solid var(--line); color:var(--muted); }
+    .demo-banner { background:var(--ink); color:var(--yellow); text-align:center; padding:9px 18px; font-size:.78rem; }
+    .hero-inner { display:grid; grid-template-columns:1fr auto; align-items:center; gap:36px; }
+    .hero-seal { width:220px; height:220px; border:2px solid; border-radius:50%; display:grid; place-content:center; text-align:center; transform:rotate(9deg); font-weight:900; font-size:1.1rem; letter-spacing:.12em; }
+    .hero-seal strong { display:block; font-size:5rem; letter-spacing:-.1em; }
+    .quick { padding:35px 0; }
+    .quick .grid { grid-template-columns:repeat(4,1fr); }
+    .quick a { background:var(--ink); color:white; border-radius:12px; padding:24px 20px; display:flex; flex-direction:column; gap:20px; font-weight:800; }
+    .quick a span { color:var(--yellow); font-size:.7rem; letter-spacing:.1em; }
+    .quick a:hover { color:var(--yellow); }
+    .eyebrow { font-size:.72rem; text-transform:uppercase; letter-spacing:.15em; font-weight:900; margin-bottom:18px; }
+    .toolbar { display:flex; gap:10px; flex-wrap:wrap; margin:24px 0; }
+    .chip { border:1px solid var(--line); border-radius:999px; padding:10px 18px; background:transparent; font-weight:700; }
+    .chip[aria-pressed=true] { background:var(--ink); color:var(--yellow); border-color:var(--ink); }
+    .agenda-row { display:grid; grid-template-columns:100px 1fr auto; gap:22px; align-items:center; padding:25px 0; border-bottom:1px solid var(--line); }
+    .agenda-row time { font-weight:900; font-size:1.2rem; }
+    .agenda-row h3 { margin:0 0 7px; }
+    .agenda-row p { margin:0; color:var(--muted); }
+    .agenda-row .tag { margin:0; }
+    .product-foot { display:flex; gap:12px; justify-content:space-between; align-items:center; margin-top:25px; }
+    .product-foot .button { padding:9px 16px; background:var(--ink); color:var(--yellow); }
+    .cart { background:#fffdf4; border:2px solid var(--ink); padding:25px; border-radius:18px; margin-top:28px; }
+    .cart h3 { margin-top:0; }
+    .cart-item { display:flex; gap:12px; align-items:center; justify-content:space-between; padding:12px 0; border-bottom:1px solid var(--line); }
+    .quantity { display:flex; gap:12px; align-items:center; }
+    .quantity button { width:34px; height:34px; border:1px solid var(--line); border-radius:50%; background:var(--paper); }
+    .small { font-size:.8rem; color:var(--muted); line-height:1.6; }
+    textarea { width:100%; min-height:130px; margin-top:15px; border:1px solid var(--line); border-radius:8px; padding:15px; resize:vertical; background:var(--paper); }
+    details { margin-top:20px; border-top:1px solid var(--line); padding-top:16px; }
+    summary { cursor:pointer; font-weight:800; }
+    details p { margin-top:14px!important; }
+    select { display:block; width:min(100%,440px); padding:14px; margin:20px 0; border:2px solid var(--ink); border-radius:8px; background:var(--paper); }
+    .contact-note { max-width:650px; line-height:1.6; }
+    @media(min-width:761px) and (max-width:1000px) { .hero-seal { width:160px; height:160px; } .nav-links { gap:12px; } .hero h1 { font-size:11vw; } }
+    @media(max-width:760px) { .hero-inner { display:block; } .hero-seal { display:none; } .quick .grid { grid-template-columns:repeat(2,1fr); } .agenda-row { grid-template-columns:75px 1fr; gap:12px; } .agenda-row .tag { grid-column:2; justify-self:start; } .hero h1 { font-size:clamp(3.8rem,16vw,7rem); } }
+    @media(prefers-reduced-motion:reduce) { * { scroll-behavior:auto; } .card:hover,.button:hover { transform:none; } }
+    @media(max-width:760px) { .nav { align-items:flex-start; flex-direction:column; gap:14px; } .nav-links { gap:12px; flex-wrap:wrap; } .hero { min-height:80vh; } .grid { grid-template-columns:1fr; } .section-head,.event { display:block; } .lead { margin-top:22px; } .event .button { margin-top:20px; } footer { display:block; line-height:2; } }
+  </style>
+</head>
+<body>
+  <div class="demo-banner">Aperçu de campagne · événements et produits d'exemple · aucune commande transmise</div>
+  <nav class="nav">
+    <a class="brand" href="#top">BREAKING <span>BDE</span></a>
+    <div class="nav-links"><a href="#events">Agenda</a><a href="#food">Commander</a><a href="#equipe">Équipe</a><a href="#programme">Nos idées</a><a href="#contact">Contact</a></div>
+  </nav>
+
+  <main id="top">
+    <header class="hero">
+      <div class="hero-inner">
+        <div>
+        <div class="kicker">ESCP · Liste jaune · Campagne BDE</div>
+        <h1>BREAKING<br>BDE</h1>
+        <p class="hero-copy">Une campagne qui casse les codes, rassemble les promos et transforme chaque moment sur le campus.</p>
+        <div class="buttons"><a class="button dark" href="#events">Voir l'agenda ↗</a><a class="button" href="#food">Une petite faim ?</a></div>
+        </div>
+        <div class="hero-seal" aria-label="La liste jaune ESCP"><span>LA LISTE</span><strong>JAUNE</strong><span>ESCP · BDE</span></div>
+      </div>
+    </header>
+
+    <section class="quick" aria-label="Accès rapides"><div class="grid">
+      <a href="#events"><span>01 / AU PROGRAMME</span>Choisir son prochain event ↗</a>
+      <a href="#food"><span>02 / FOOD CORNER</span>Préparer une commande ↗</a>
+      <a href="#equipe"><span>03 / LA TEAM</span>Découvrir les pôles ↗</a>
+      <a href="#contact"><span>04 / ON T'ÉCOUTE</span>Joindre la liste ↗</a>
+    </div></section>
+
+    <section id="events">
+      <div class="eyebrow">La campagne, jour par jour</div>
+      <div class="section-head"><h2>Au<br>programme.</h2><p class="lead">Un café avant les cours, un défi entre amis, une soirée ensemble. Voici un aperçu : dates et lieux seront annoncés.</p></div>
+      <div class="toolbar" id="days" role="group" aria-label="Choisir un jour">
+        <button class="chip" type="button" data-day="0" aria-pressed="true">Jour 1 · Lancement</button>
+        <button class="chip" type="button" data-day="1" aria-pressed="false">Jour 2 · Challenges</button>
+        <button class="chip" type="button" data-day="2" aria-pressed="false">Jour 3 · Breaking Night</button>
+      </div>
+      <div id="agenda" aria-live="polite"></div>
+      <p class="small">Planning illustratif, à confirmer par l'équipe.</p>
+    </section>
+
+    <section id="programme">
+      <div class="section-head"><h2>Nos<br>engagements.</h2><p class="lead">Six pistes pour une vie étudiante qui nous ressemble. Propositions de travail à préciser avec l'équipe.</p></div>
+      <div class="grid">
+        <article class="card"><span class="tag">01 · Soirées</span><h3>Des nuits dont on parle encore</h3><p>Des concepts originaux, des lieux surprenants et des événements pensés pour toutes les promos.</p></article>
+        <article class="card"><span class="tag">02 · Sport</span><h3>Tout le monde sur le terrain</h3><p>Tournois, initiations et défis inter-promos pour bouger sans jamais se prendre trop au sérieux.</p></article>
+        <article class="card"><span class="tag">03 · Culture</span><h3>Sortir du campus</h3><p>Expositions, cinéma, découvertes et rencontres pour faire vivre la curiosité ESCP.</p></article>
+        <article class="card"><span class="tag">04 · Bien-être</span><h3>Une année qui respire</h3><p>Des pauses, des ateliers et des initiatives pour prendre soin de soi pendant l'année.</p></article>
+        <article class="card"><span class="tag">05 · International</span><h3>Un campus sans frontières</h3><p>Des rendez-vous pour connecter toutes les cultures et toutes les destinations.</p></article>
+        <article class="card"><span class="tag">06 · RSE</span><h3>Faire mieux, ensemble</h3><p>Des événements plus responsables et des actions utiles, sans renoncer au plaisir.</p></article>
+      </div>
+    </section>
+
+    <section id="equipe">
+      <div class="section-head"><h2>La team<br>Breaking</h2><p class="lead">Une équipe complémentaire, motivée et prête à porter la campagne jusqu'au bout.</p></div>
+      <div class="grid"><article class="card"><span class="tag">Le bureau</span><h3>Présidence & coordination</h3><p>La vision, l'énergie et le lien entre tous les pôles.</p></article><article class="card"><span class="tag">Événementiel</span><h3>Les faiseurs de moments</h3><p>Ils imaginent les concepts et rendent les événements possibles.</p></article><article class="card"><span class="tag">Communication</span><h3>Les raconteurs d'histoires</h3><p>Ils donnent une voix, une image et un ton à Breaking BDE.</p></article><article class="card"><span class="tag">Vie étudiante</span><h3>Les connecteurs</h3><p>Sport, culture, international et bien-être : ils pensent au quotidien.</p></article></div>
+    </section>
+
+    <section id="food">
+      <div class="eyebrow">Pause gourmande</div>
+      <div class="section-head"><h2>Breaking<br>Food.</h2><p class="lead">Compose ta sélection et retrouve ton récapitulatif juste en dessous. Carte d'exemple : offre et tarifs à confirmer.</p></div>
+      <div class="toolbar" id="categories" role="group" aria-label="Filtrer les produits"><button class="chip" type="button" data-category="all" aria-pressed="true">Tout</button><button class="chip" type="button" data-category="food" aria-pressed="false">À manger</button><button class="chip" type="button" data-category="drink" aria-pressed="false">À boire</button></div>
+      <div class="grid" id="products"></div>
+      <div class="cart"><h3>Ta sélection <span id="cart-count">(0)</span></h3><div id="cart-items" aria-live="polite"><p>Ta pause gourmande commence ici.</p></div><p class="small">Démonstration : cette sélection reste sur cette page et n'est pas envoyée à l'équipe.</p><button class="button dark" id="summary-button" type="button">Voir mon récapitulatif</button><div id="summary-panel" hidden><label for="order-summary">Récapitulatif à copier</label><textarea id="order-summary" readonly></textarea><p class="small" id="copy-feedback" role="status"></p><button class="button" id="copy-button" type="button">Copier le récapitulatif</button></div></div>
+    </section>
+
+    <div class="contact" id="contact"><div class="contact-inner"><div class="eyebrow">Le bon contact, au bon endroit</div><h2>On se<br>parle ?</h2><p>Une question sur un événement, une idée ou envie de rejoindre l'aventure ?</p><label for="contact-pole">Quel pôle souhaites-tu joindre ?</label><select id="contact-pole"><option value="bureau">Bureau</option><option value="events">Événementiel</option><option value="com">Communication</option><option value="vie">Vie étudiante</option></select><p id="contact-description" class="contact-note" aria-live="polite"></p><div class="buttons" id="contact-links"></div><p class="contact-note small">Les contacts seront publiés lorsque les membres de la liste les auront renseignés.</p></div></div>
+  </main>
+  <footer><span>© 2026 Breaking BDE · Liste candidate au BDE de l'ESCP</span><span>La liste jaune · Site de campagne</span></footer>
+  <script>
+    // À PERSONNALISER : les exemples ci-dessous ne sont pas des annonces confirmées.
+    // Ajouter les vrais liens de contact dans CONTACTS, puis retirer le bandeau de démonstration une fois le site prêt.
+    const AGENDA = [
+      [{ time:'08:30', name:'Good morning, Breaking', place:'Petit-déjeuner · lieu à annoncer', type:'Food' }, { time:'12:30', name:'Meet the team', place:'Rencontre avec la liste · lieu à annoncer', type:'Rencontre' }],
+      [{ time:'12:00', name:'Breaking Challenge', place:'Défis entre amis · lieu à annoncer', type:'Animation' }, { time:'16:00', name:'La pause jaune', place:'Goûter · lieu à annoncer', type:'Food' }],
+      [{ time:'18:00', name:'Before Breaking', place:'Rendez-vous avec la team · lieu à annoncer', type:'Rencontre' }, { time:'21:00', name:'Breaking Night', place:'Soirée · lieu et modalités à annoncer', type:'Event' }]
+    ];
+    const PRODUCTS = [
+      {id:'cookie',name:'Cookie',category:'food',description:'La pause qui met tout le monde d’accord.'},
+      {id:'crepe',name:'Crêpe sucrée',category:'food',description:'Un classique pour recharger les batteries.'},
+      {id:'cafe',name:'Café',category:'drink',description:'Une dose d’énergie avant le prochain cours.'},
+      {id:'jus',name:'Jus de fruits',category:'drink',description:'Une pause fraîcheur, version Breaking.'}
+    ];
+    const CONTACTS = {
+      bureau:{text:'Le bureau coordonne la liste et répond aux questions générales.',url:''},
+      events:{text:'Le pôle événementiel répond aux questions sur les horaires, les lieux et les inscriptions.',url:''},
+      com:{text:'Le pôle communication répond aux demandes de visuels, de publications et de collaborations.',url:''},
+      vie:{text:'Le pôle vie étudiante recueille tes idées pour le sport, la culture et la vie sur le campus.',url:''}
+    };
+    const cart = new Map();
+    function showDay(index) {
+      const agenda = document.querySelector('#agenda'); agenda.replaceChildren();
+      AGENDA[index].forEach(item => {
+        const row=document.createElement('article'); row.className='agenda-row';
+        const time=document.createElement('time'); time.textContent=item.time; time.dateTime=item.time;
+        const content=document.createElement('div'); const title=document.createElement('h3'); title.textContent=item.name;
+        const place=document.createElement('p'); place.textContent=item.place; content.append(title,place);
+        const type=document.createElement('span'); type.className='tag'; type.textContent=item.type; row.append(time,content,type); agenda.append(row);
+      });
+      document.querySelectorAll('[data-day]').forEach(button=>button.setAttribute('aria-pressed',String(Number(button.dataset.day)===index)));
+    }
+    document.querySelector('#days').addEventListener('click',event=>{const button=event.target.closest('[data-day]');if(button)showDay(Number(button.dataset.day));});
+    function showProducts(category='all') {
+      const container=document.querySelector('#products');container.replaceChildren();
+      PRODUCTS.filter(product=>category==='all'||product.category===category).forEach(product=>{
+        const card=document.createElement('article');card.className='card';
+        const tag=document.createElement('span');tag.className='tag';tag.textContent=product.category==='food'?'À manger':'À boire';
+        const title=document.createElement('h3');title.textContent=product.name;
+        const description=document.createElement('p');description.textContent=product.description;
+        const foot=document.createElement('div');foot.className='product-foot';const price=document.createElement('span');price.className='small';price.textContent='Tarif à confirmer';
+        const add=document.createElement('button');add.className='button';add.type='button';add.textContent='Ajouter +';add.setAttribute('aria-label','Ajouter : '+product.name);add.addEventListener('click',()=>changeQuantity(product.id,1));
+        foot.append(price,add);card.append(tag,title,description,foot);container.append(card);
+      });
+      document.querySelectorAll('[data-category]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.category===category)));
+    }
+    document.querySelector('#categories').addEventListener('click',event=>{const button=event.target.closest('[data-category]');if(button)showProducts(button.dataset.category);});
+    function changeQuantity(id,delta) {const next=Math.max(0,Math.min(10,(cart.get(id)||0)+delta));if(next)cart.set(id,next);else cart.delete(id);renderCart();}
+    function renderCart(){
+      const list=document.querySelector('#cart-items');list.replaceChildren();let count=0;
+      cart.forEach((quantity,id)=>{count+=quantity;const product=PRODUCTS.find(p=>p.id===id);const row=document.createElement('div');row.className='cart-item';const name=document.createElement('span');name.textContent=product.name;const controls=document.createElement('div');controls.className='quantity';
+        [-1,1].forEach(delta=>{if(delta===1){const value=document.createElement('span');value.textContent=quantity;controls.append(value);}const button=document.createElement('button');button.type='button';button.textContent=delta===1?'+':'−';button.disabled=delta===1&&quantity===10;button.setAttribute('aria-label',(delta===1?'Ajouter':'Retirer')+' : '+product.name);button.addEventListener('click',()=>changeQuantity(id,delta));controls.append(button);});row.append(name,controls);list.append(row);
+      });
+      if(!count){const empty=document.createElement('p');empty.textContent='Ta pause gourmande commence ici.';list.append(empty);}
+      document.querySelector('#cart-count').textContent='('+count+')';document.querySelector('#summary-button').disabled=count===0;
+      document.querySelector('#order-summary').value='BREAKING BDE — sélection de démonstration\n'+[...cart].map(([id,q])=>q+' × '+PRODUCTS.find(p=>p.id===id).name).join('\n')+'\nTarifs à confirmer. Aucune commande transmise.';
+      if(!count)document.querySelector('#summary-panel').hidden=true;
+      document.querySelector('#copy-feedback').textContent='';
+    }
+    document.querySelector('#summary-button').addEventListener('click',()=>{document.querySelector('#summary-panel').hidden=false;document.querySelector('#order-summary').focus();});
+    document.querySelector('#copy-button').addEventListener('click',async()=>{const field=document.querySelector('#order-summary');try{await navigator.clipboard.writeText(field.value);document.querySelector('#copy-feedback').textContent='Récapitulatif copié. Aucune commande envoyée.';}catch{field.focus();field.select();document.querySelector('#copy-feedback').textContent='Sélectionne puis copie le texte avec Ctrl+C ou ⌘C.';}});
+    function showContact(){const contact=CONTACTS[document.querySelector('#contact-pole').value];document.querySelector('#contact-description').textContent=contact.text;const links=document.querySelector('#contact-links');links.replaceChildren();if(contact.url&&/^(https:\/\/|mailto:|tel:)/i.test(contact.url)){const a=document.createElement('a');a.href=contact.url;a.className='button dark';a.textContent='Contacter ce pôle ↗';links.append(a);}}
+    document.querySelector('#contact-pole').addEventListener('change',showContact);
+    showDay(0);showProducts();renderCart();showContact();
+  </script>
+</body>
+</html>
